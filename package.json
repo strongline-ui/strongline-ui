@@ -1,15 +1,19 @@
 {
     "name": "@strongline/ui",
     "version": "0.0.1",
-    "description": "",
-    "main": "webpack.config.js",
+    "description": "Userinterface library for web enthusiasts",
+    "main": "./dist/strongline-ui.js",
     "scripts": {
         "start": "./node_modules/.bin/webpack-dev-server --config webpack.config.js --port 3001 --hot --inline",
         "test": "echo \"Error: no test specified\" && exit 1",
         "bundle": "./node_modules/.bin/webpack --config webpack.config.js"
     },
-    "author": "",
-    "license": "MIT",
+    "author": "Strongline Group",
+    "contributors": [
+        "Jan Biasi <biasijan@gmail.com> (https://aviormusic.com)",
+        "Felix Langebach <felixlangebach@gmail.com> (https://www.new-time.ch/author/felix/)"
+    ],
+    "license": "Apache-2.0",
     "repository": {
         "type": "git",
         "url": "git://github.com/strongline/strongline-ui.git"

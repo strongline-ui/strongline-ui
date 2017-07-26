@@ -60,3 +60,14 @@ typings/
 
 # Yarn Integrity file
 .yarn-integrity
+
+# dotenv environment variables file
+.env
+
+# additions
+.babelrc
+.editorconfig
+.styelintrc
+index.html
+webpack.config.js
+src
