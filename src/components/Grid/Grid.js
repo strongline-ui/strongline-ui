@@ -1,0 +1,3 @@
+import "components/Grid/Grid.scss";
+import "components/Grid/Grid.flex.scss";
+// this component does not have any logic, pure styling ...

@@ -1,0 +1,42 @@
+$grid-max-columns: 12;
+
+.sl-grid-flex {
+    align-items: stretch;
+    display: flex;
+    flex-flow: row wrap;
+    margin: 0 auto;
+
+    &.sl-grid-flex--no-spacing {
+        padding: 0;
+    }
+}
+
+.sl-cell {
+    box-sizing: border-box;
+}
+
+.sl-cell--top {
+    align-self: flex-start;
+}
+
+.sl-cell--middle {
+    align-self: center;
+}
+
+.sl-cell--bottom {
+    align-self: flex-end;
+}
+
+.sl-cell--stretch {
+    align-self: stretch;
+}
+
+.sl-grid-flex.sl-grid-flex--no-spacing > .sl-cell {
+    margin: 0;
+}
+
+@for $i from 1 through $grid-max-columns {
+    .sl-cell--order-#{$i} {
+        order: $i;
+    }
+}

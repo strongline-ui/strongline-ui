@@ -1,0 +1,12 @@
+.sl-button {
+    background-color: #000;
+
+    &:hover {
+        background-color: #888;
+    }
+
+    .sl-button__text,
+    .sl-button__icon {
+        color: #fff;
+    }
+}
