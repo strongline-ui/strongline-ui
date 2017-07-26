@@ -1,44 +1,44 @@
 import Component, { registerComponent } from "Component";
 
-export default class TexstField extends Component {
-    constants = {
-        MAX_ROWS_NONE: -1,
-        MAX_ROWS_ATTRIBUTE: "maxrows"
-    };
+export const TextFieldClasses = {
+    LABEL: "sl-textfield__label",
+    INPUT: "sl-textfield__input",
+    IS_DIRTY: "is-dirty",
+    IS_FOCUSED: "is-focused",
+    IS_DISABLED: "is-disabled",
+    IS_INVALID: "is-invalid",
+    IS_UPGRADED: "is-upgraded",
+    HAS_PLACEHOLDER: "has-placeholder"
+};
 
-    classes = {
-        LABEL: "sl-textfield__label",
-        INPUT: "sl-textfield__input",
-        IS_DIRTY: "is-dirty",
-        IS_FOCUSED: "is-focused",
-        IS_DISABLED: "is-disabled",
-        IS_INVALID: "is-invalid",
-        IS_UPGRADED: "is-upgraded",
-        HAS_PLACEHOLDER: "has-placeholder"
-    };
+export const TextFieldConstants = {
+    MAX_ROWS_NONE: -1,
+    MAX_ROWS_ATTRIBUTE: "maxrows"
+};
 
+export default class TextField extends Component {
     constructor(element) {
-        super("TextField", component);
+        super("TextField", element);
 
-        this.maxRows = this.constants.MAX_ROWS_NONE;
+        this.maxRows = TextFieldConstants.MAX_ROWS_NONE;
     }
 
     init() {
         if (this.element) {
-            this.label = this.element_.querySelector(`.${this.CssClasses_.LABEL}`);
-            this.input = this.element_.querySelector(`.${this.CssClasses_.INPUT}`);
+            this.label = this.element.querySelector(`.${TextFieldClasses.LABEL}`);
+            this.input = this.element.querySelector(`.${TextFieldClasses.INPUT}`);
 
-            if (this.input_.hasAttribute(this.constants.MAX_ROWS_ATTRIBUTE)) {
-                const maxRows = his.input_.getAttribute(this.constants.MAX_ROWS_ATTRIBUTE);
+            if (this.input.hasAttribute(TextFieldConstants.MAX_ROWS_ATTRIBUTE)) {
+                const maxRows = his.input.getAttribute(TextFieldConstants.MAX_ROWS_ATTRIBUTE);
                 this.maxRows = parseInt(maxRows, 10);
 
                 if (isNaN(this.maxRows)) {
-                    this.maxRows = this.constants.NO_MAX_ROWS;
+                    this.maxRows = TextFieldConstants.NO_MAX_ROWS;
                 }
             }
 
             if (this.input.hasAttribute("placeholder")) {
-                this.element.classList.add(this.classes.HAS_PLACEHOLDER);
+                this.element.classList.add(TextFieldClasses.HAS_PLACEHOLDER);
             }
 
             this.input.addEventListener("input", this.updateClasses.bind(this));
@@ -46,20 +46,22 @@ export default class TexstField extends Component {
             this.input.addEventListener("blur", this.onBlur.bind(this));
             this.input.addEventListener("reset", this.updateClasses.bind(this));
 
-            if (this.maxRows !== this.constants.NO_MAX_ROWS) {
+            if (this.maxRows !== TextFieldConstants.NO_MAX_ROWS) {
                 // TODO: Should handle pasting multiline text
                 this.input.addEventListener("keydown", this.onKeyDown.bind(this));
             }
 
-            const invalid = this.element.classList.contains(this.classes.IS_INVALID);
+            console.log("ELEMENT", this.element);
+
+            const invalid = this.element.classList.contains(TextFieldClasses.IS_INVALID);
             this.updateClasses();
-            this.element.classList.add(this.classes.IS_UPGRADED);
+            this.element.classList.add(TextFieldClasses.IS_UPGRADED);
 
             if (invalid) {
-                this.element.classList.add(this.classes.IS_INVALID);
+                this.element.classList.add(TextFieldClasses.IS_INVALID);
             }
 
-            if (this.input_.hasAttribute("autofocus")) {
+            if (this.input.hasAttribute("autofocus")) {
                 this.element.focus();
                 this.checkFocus();
             }
@@ -92,11 +94,13 @@ export default class TexstField extends Component {
     }
 
     onFocus() {
-        this.classList.add(this.CssClasses_.IS_FOCUSED);
+        this.element.classList.add(TextFieldClasses.IS_FOCUSED);
+        this.updateClasses();
     }
 
     onBlur(event) {
-        this.classList.remove(this.CssClasses_.IS_FOCUSED);
+        this.element.classList.remove(TextFieldClasses.IS_FOCUSED);
+        this.updateClasses();
     }
 
     updateClasses() {
@@ -104,36 +108,48 @@ export default class TexstField extends Component {
         this.checkValidity();
         this.checkDirty();
         this.checkFocus();
+
+        console.log("New classes", this);
+    }
+
+    checkValidity() {
+        if (this.input.validity) {
+            if (this.input.validity.valid) {
+                this.element.classList.remove(TextFieldClasses.IS_INVALID);
+            } else {
+                this.element.classList.add(TextFieldClasses.IS_INVALID);
+            }
+        }
     }
 
     checkDirty() {
         const { input, element } = this;
         if ((input.value && input.value.length > 0) || input.placeholder.trim() !== "") {
-            element.classList.add(this.classes.IS_DIRTY);
+            element.classList.add(TextFieldClasses.IS_DIRTY);
         } else {
-            element_.classList.remove(this.classes.IS_DIRTY);
+            element.classList.remove(TextFieldClasses.IS_DIRTY);
         }
     }
 
     checkDisabled() {
-        if (this.input_.disabled) {
-            this.element.classes.add(this.CssClasses_.IS_DISABLED);
+        if (this.input.disabled) {
+            this.element.classList.add(TextFieldClasses.IS_DISABLED);
         } else {
-            this.element.classes.remove(this.CssClasses_.IS_DISABLED);
+            this.element.classList.remove(TextFieldClasses.IS_DISABLED);
         }
     }
 
     checkFocus() {
-        if (!!this.element.hasState(":focus")) {
-            this.element.classes.add(this.CssClasses_.IS_FOCUSED);
+        if (this.element.querySelector(":focus") !== null) {
+            this.element.classList.add(TextFieldClasses.IS_FOCUSED);
         } else {
-            this.element.classes.remove(this.CssClasses_.IS_FOCUSED);
+            this.element.classList.remove(TextFieldClasses.IS_FOCUSED);
         }
     }
 }
 
 registerComponent({
-    constructor: TexstField,
-    selector: "sl-js-input",
+    constructor: TextField,
+    selector: "sl-js-textfield",
     widget: true
 });

@@ -1,4 +1,4 @@
-import Element from "Element";
+import Element from "dom/Element";
 
 export const ANONYM_COMPONENT = "@@INTERNAL_ANONYM_COMPONENT";
 
@@ -7,11 +7,6 @@ export const registeredComponentList = [];
 
 export default class Component {
     name = ANONYM_COMPONENT;
-
-    constants = {};
-    classes = {
-        IS_UPGRADED: "is-upgraded"
-    };
 
     constructor(name = ANONYM_COMPONENT, element = null) {
         if (name) {
